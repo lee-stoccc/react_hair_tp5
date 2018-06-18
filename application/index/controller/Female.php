@@ -7,6 +7,7 @@
  */
 
 namespace app\index\controller;
+use think\Db;
 use  think\db\connector;
 
 
@@ -20,10 +21,32 @@ class Female
         $getDatas['data']=$getData;
         if($getDatas){
             $getDatas['info']=1;
-            return json_encode($getDatas);
+            return $getDatas;
         }else{
             $getDatas['info']=0;
-            return json_encode($getDatas);
+            return $getDatas;
         }
     }
+
+    public function saveInfo(){
+        header('Access-Control-Allow-Origin:*');
+        $data=[
+            'f_age'=>input('age'),
+            'f_name'=>input('name'),
+            'f_address'=>input('address'),
+            'f_tel'=>input('tel'),
+            'f_job'=>input('job')
+        ];
+        $model=new \app\index\model\Female;
+        $save=$model->saveInfos($data);
+        if($save){
+            $info['info']=1;
+            return $info;
+        }else{
+            $info['info']=0;
+            return $info;
+        }
+
+    }
+
 }

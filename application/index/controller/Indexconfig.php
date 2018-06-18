@@ -10,10 +10,10 @@ class Indexconfig extends Controller{
         $data=$get_db->Index_confg(input('mini_id'));
         if($data){
             $data['info']=1;
-            return json_encode($data);
+            return $data;
         }else{
             $data['info']=0;
-            return json_encode($data);
+            return $data;
         }
     }
 }

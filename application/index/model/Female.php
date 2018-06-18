@@ -23,4 +23,14 @@ class Female
             return $getData;
         }
     }
+
+    public function saveInfos($data){
+        $con=new Db();
+        $conn=$con::table('female')->insert($data);
+        if($conn){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
