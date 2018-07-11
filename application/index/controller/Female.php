@@ -13,11 +13,13 @@ use  think\db\connector;
 
 class Female
 {
+    // 查询个人信息
     public function getFemaleInfo(){
         header('Access-Control-Allow-Origin:*');
         $id=input('id');
+        $num=input('num');
         $connect=new \app\index\model\Female;
-        $getData=$connect->getFemaleInfo($id);
+        $getData=$connect->getFemaleInfo($id,$num);
         $getDatas['data']=$getData;
         if($getDatas){
             $getDatas['info']=1;
@@ -28,6 +30,7 @@ class Female
         }
     }
 
+    // 保存个人信息
     public function saveInfo(){
         header('Access-Control-Allow-Origin:*');
         $data=[
@@ -46,7 +49,20 @@ class Female
             $info['info']=0;
             return $info;
         }
-
     }
 
+    // 关注
+    public function attention(){
+        header('Access-Control-Allow-Origin:*');
+        $id=input('id');
+        $model=new \app\index\model\Female;
+        $res=$model->addAttendtion($id);
+        if($res){
+            $info['info']=1;
+            return $info;
+        }else{
+            $info['info']=0;
+            return $info;
+        }
+    }
 }
