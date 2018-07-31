@@ -66,9 +66,6 @@ class Hairshop
             ->where('uid','=',$uid)->where('shopid','=',$shopid)->delete();
      }
 
-
-
-
     // 保存用户关注的商店
     public function saveusecareshop($cid,$uid,$shopid){
         $db=new Db();
@@ -91,5 +88,27 @@ class Hairshop
                 return false;
             }
         }
+    }
+
+    // 查询是否有关注店铺
+    public function isaddgood($cid,$uid,$shopid){
+        $db=new Db();
+        // 判断是否已经关注过此店铺
+        $issave=$db::table('hairshopcarenum')->field('*')->where('cid','=',$cid)
+            ->where('uid','=',$uid)
+            ->where('shopid','=',$shopid)->find();
+        return $issave;
+    }
+
+    // 查询单一店铺详细信息
+    public function shopdetail($cid,$shopid){
+          $db=new  Db ();
+           $shopdetail= $db::table('hairshop')->field('*')->where('cid','=', $cid)
+               ->where('shopid', '=' , $shopid)->find();
+           if($shopdetail){
+               return  $shopdetail;
+           }else{
+               return array('msg'=>'查无此店铺信息或查询错误');
+           }
     }
 }

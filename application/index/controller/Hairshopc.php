@@ -9,6 +9,7 @@
 namespace app\index\controller;
 
 
+use app\index\model\Hairorder;
 use think\Collection;
 use think\Controller;
 use app\index\model\Hairshop;
@@ -29,6 +30,18 @@ class Hairshopc extends Controller
         }
     }
 
+    public function searchname(){
+        header('Access-Control-Allow-Origin:*');
+        $con=input('name');
+        $shop=new Hairshop();
+        $data=$shop->searchshop($con);
+        if($data){
+            echo json_encode($data);
+        }else{
+            echo json_encode(array('code'=>1));
+        }
+    }
+
     // 关注店铺
     public function addcarenum(){
         header('Access-Control-Allow-Origin:*');
@@ -44,19 +57,6 @@ class Hairshopc extends Controller
 
 
     }
-
-    public function searchname(){
-        header('Access-Control-Allow-Origin:*');
-        $con=input('name');
-        $shop=new Hairshop();
-        $data=$shop->searchshop($con);
-        if($data){
-            echo json_encode($data);
-        }else{
-            echo json_encode(array('code'=>1));
-        }
-    }
-
     // 保存关注店铺
     public function saveusecareshop(){
         header('Access-Control-Allow-Origin:*');
@@ -72,4 +72,17 @@ class Hairshopc extends Controller
         }
     }
 
+    // 查询单一店铺详细信息
+    public function shopdetail(){
+        $cid=input('cid');
+        $shopid=input('shopid');
+        header('Access-Control-Allow-Origin:*');
+        $hairshop=new Hairshop();
+        $shopdetail=$hairshop->shopdetail($cid,$shopid);
+        if($shopdetail){
+            return $shopdetail;
+        }else{
+            return array('msg'=>'查无此店铺信息或查询错误c');
+        }
+    }
 }
